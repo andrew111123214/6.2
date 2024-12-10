@@ -1,1 +1,2 @@
-console.log(Math.random(10));
+const 
+console.log(Math.random())
