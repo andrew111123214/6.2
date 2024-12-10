@@ -3,19 +3,18 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Example</title>
+    <title> Изменить время «выбегания» строки; </title>
     <script>
         var pos = 1;
         var text = "Привет, я бегущая строка";
-        var text1 = "Привет, я бегущая строка";
         function scrol1() {
             document.running.text.value = text.substring(0, pos);
             if (pos >= text.length) {
                 pos = 1;
-                setTimeout(scrol2, 300);
+                setTimeout(scrol2, 200);
             } else {
                 pos++;
-                setTimeout(scrol1, 50);
+                setTimeout(scrol1, 10);
             }
         }
 
@@ -31,12 +30,9 @@
         }
     </script>
 </head>
-
 <body onload="scrol1()">
     <form name="running">
-            <input type="text" name="text" size="40"><br>
             <input type="text" name="text" size="40">
     </form>
 </body>
-
 </html>

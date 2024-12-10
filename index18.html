@@ -1,12 +1,72 @@
 <!DOCTYPE html>
 <html lang="ru">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title> Лабораторная работа</title>
-        <link rel="stylesheet" href="style1.css">
-        <script src="file1.js" defer></script>
-    </head>
-    <body>
-    </body>
+<head>
+    <meta charset="UTF-8">
+    <title> При наведении на элемент (например, кнопку) текст, прикрепленный к 
+        курсору, должен менять цвет (например, на красный).</title>
+    <style>
+        body
+        {
+            background-color: "F5DEB3";
+        }
+        .spanstyle {
+            position: absolute;
+            top: -50px;
+        }
+        .hover-button {
+            padding: 10px 20px;
+            background-color: #8B4513;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body onload="makesnake()"  text="8B4513" style="width:100%; overflow-x:hidden; overflow-y:scroll">
+    <button class="hover-button" onmouseover="changeColor(true)" onmouseout="changeColor(false)">Наведи на меня</button>
+</body>
+
+<script>
+    var x, y;
+    var step = 20;
+    var flag = 0;
+    var message = "При наведении на элемент (например, кнопку) текст, прикрепленный к курсору, должен менять цвет (например, на красный) "; 
+    message = message.split("");
+    var xpos = new Array(message.length).fill(-50);
+    var ypos = new Array(message.length).fill(-50);
+
+    function handlerMM(e) {
+        x = e.pageX;
+        y = e.pageY;
+        flag = 1;
+    }
+    function makesnake() {
+        if (flag == 1) {
+            for (var i = message.length - 1; i >= 1; i--) {
+                xpos[i] = xpos[i - 1] + step;
+                ypos[i] = ypos[i - 1];
+            }
+            xpos[0] = x + step;
+            ypos[0] = y;
+
+            for (var i = 0; i < message.length; i++) {
+                var thisspan = document.getElementById('span' + i).style;
+                thisspan.left = xpos[i] + 'px';
+                thisspan.top = ypos[i] + 'px';
+            }
+        }
+        setTimeout(makesnake, 30);
+    }
+
+    for (var i = 0; i < message.length; i++) {
+        document.body.innerHTML += "<span id='span" + i + "' class='spanstyle'>" + message[i] + "</span>";
+    }
+    document.onmousemove = handlerMM;
+    function changeColor(isHover) {
+        for (var i = 0; i < message.length; i++) {
+            var thisspan = document.getElementById('span' + i);
+            thisspan.style.color = isHover ? 'red' : 'black';
+        }
+    }
+</script>
 </html>
