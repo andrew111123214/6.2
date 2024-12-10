@@ -1,13 +1,140 @@
-
 <!DOCTYPE html>
 <html lang="ru">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title> Лабораторная работа</title>
-        <link rel="stylesheet" href="style1.css">
-        <script src="file1.js" defer></script>
-    </head>
-    <body>
-    </body>
+<head>
+    <meta charset="UTF-8">
+    <title>Calculator</title>
+    <style>
+        body {
+            background-color: #F5DEB3;
+            color: #8B4513;
+        }
+        input {
+            width: 45px;
+        }
+    </style>
+    <script>
+        var num1 = 0, num2 = 0, oper = 0;
+
+        function plug() {
+            document.Calc.monitor.value = '';
+            num1 = 0; num2 = 0; oper = 0;
+            enableButtons();
+        }
+        function shut() {
+            document.Calc.monitor.value = '';
+            num1 = 0; num2 = 0; oper = 0;
+            disableButtons();
+        }
+        function enableButtons() {
+            for (let i = 0; i <= 9; i++) {
+                document.Calc['b' + i].disabled = false;
+            }
+            document.Calc.div.disabled = false;
+            document.Calc.off.disabled = false;
+            document.Calc.mult.disabled = false;
+            document.Calc.sqr.disabled = false;
+            document.Calc.sqrt.disabled = false;
+            document.Calc.subt.disabled = false;
+            document.Calc.fix.disabled = false;
+            document.Calc.res.disabled = false;
+            document.Calc.add.disabled = false;
+            document.Calc.backspace.disabled = false;
+        }
+        function disableButtons() {
+            for (let i = 0; i <= 9; i++) {
+                document.Calc['b' + i].disabled = true;
+            }
+            document.Calc.div.disabled = true;
+            document.Calc.off.disabled = true;
+            document.Calc.mult.disabled = true;
+            document.Calc.sqr.disabled = true;
+            document.Calc.sqrt.disabled = true;
+            document.Calc.subt.disabled = true;
+            document.Calc.fix.disabled = true;
+            document.Calc.res.disabled = true;
+            document.Calc.add.disabled = true;
+            document.Calc.backspace.disabled = true;
+        }
+
+        function digit(num) {
+            document.Calc.monitor.value += num;
+        }
+
+        function squar(check) {
+            var val = document.Calc.monitor.value;
+            check ? val = val * val : val = Math.sqrt(val);
+            document.Calc.monitor.value = val;
+        }
+
+        function expr(op) {
+            num1 = document.Calc.monitor.value;
+            document.Calc.monitor.value = '';
+            if (num1 !== '') oper = op;
+            else alert('Введите число');
+        }
+
+        function result() {
+            var R, c = 1;
+            num2 = document.Calc.monitor.value;
+            switch (oper) {
+                case 1: R = num1 / num2; break;
+                case 2: R = num1 * num2; break;
+                case 3: R = num1 - num2; break;
+                case 4: R = num1 + num2; break;
+                default: R = "Ошибка";
+            }
+            document.Calc.monitor.value = R;
+        }
+        function deleteLastCharacter() {
+            let currentValue = document.Calc.monitor.value;
+            if (currentValue.length > 0) 
+            {
+                document.Calc.monitor.value = currentValue.slice(0, -1);
+            }
+        }
+    </script>
+</head>
+<body>
+    <form name="Calc">
+        <div style="text-align: center;">
+            <h3>Calculator</h3>
+            <table frame="box" style="border: 2;">
+                <tr>
+                    <td colspan="5"><input type="text" name="monitor" style="width: 260px; text-align: right" disabled></td>
+                </tr>
+                <tr>
+                    <td><input type="button" name="b7" value="7" disabled onClick="digit(7)"></td>
+                    <td><input type="button" name="b8" value="8" disabled onClick="digit(8)"></td>
+                    <td><input type="button" name="b9" value="9" disabled onClick="digit(9)"></td>
+                    <td><input type="button" name="div" value="/" disabled onClick="expr(1)"></td>
+                    <td><input type="button" name="off" value="OFF" disabled onClick="shut()"></td>
+                </tr>
+                <tr>
+                    <td><input type="button" name="b4" value="4" disabled onClick="digit(4)"></td>
+                    <td><input type="button" name="b5" value="5" disabled onClick="digit(5)"></td>
+                    <td><input type="button" name="b6" value="6" disabled onClick="digit(6)"></td>
+                    <td><input type="button" name="mult" value="*" disabled onClick="expr(2)"></td>
+                    <td><input type="button" name="sqr" value="SQR" disabled onClick="squar(1)"></td>
+                </tr>
+                <tr>
+                    <td><input type="button" name="b1" value="1" disabled onClick="digit(1)"></td>
+                    <td><input type="button" name="b2" value="2" disabled onClick="digit(2)"></td>
+                    <td><input type="button" name="b3" value="3" disabled onClick="digit(3)"></td>
+                    <td><input type="button" name="subt" value="-" disabled onClick="expr(3)"></td>
+                    <td><input type="button" name="sqrt" value="SQRT" disabled onClick="squar(0)"></td>
+                </tr>
+                <tr>
+                    <td><input type="button" name="b0" value="0" disabled onClick="digit(0)"></td>
+                    <td><input type="button" name="fix" value="." disabled onClick="digit('.')"></td>
+                    <td><input type="button" name="res" value="=" disabled onClick="result()"></td>
+                    <td><input type="button" name="add" value="+" disabled onClick="expr(4)"></td>
+                    <td><input type="button" name="fault" value="ON/C" onClick="plug()"></td>
+                </tr>
+                <tr>
+                    <td colspan="5"><input type="button" name="backspace" value="Backspace" style="width: 70px;" disabled onClick="deleteLastCharacter()"></td>
+                </tr>
+            </table>
+        </div>
+    </form>
+</body>
 </html>
