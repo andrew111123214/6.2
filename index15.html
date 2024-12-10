@@ -1,13 +1,49 @@
-
 <!DOCTYPE html>
-<html lang="ru">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title> Лабораторная работа</title>
-        <link rel="stylesheet" href="style1.css">
-        <script src="file1.js" defer></script>
-    </head>
-    <body>
-    </body>
+<html>
+<head>
+    <style>
+        body
+        {
+            display: grid;
+            text-align: center;
+        }
+    </style>
+    <meta charset="UTF-8">
+    <title>Часы</title>
+    <script language="JavaScript">
+        var timer = null;
+        var timerrun = false;
+
+        function stoptime() {
+            if (timerrun) clearTimeout(timer);
+            timerrun = false;
+        }
+
+        function starttime() {
+            stoptime();
+            showtime();
+        }
+
+        function showtime() {
+            var all = new Date();
+            var hours = all.getHours();
+            var minutes = all.getMinutes();
+            var seconds = all.getSeconds();
+            var timevalue = "";
+            timevalue += (hours < 10 ? "0" : "") + hours; 
+            timevalue += ":" + (minutes < 10 ? "0" : "") + minutes; 
+            timevalue += ":" + (seconds < 10 ? "0" : "") + seconds;
+
+            document.clock.next.value = timevalue;
+            timer = setTimeout(showtime, 1000);
+            timerrun = true;
+        }
+    </script>
+</head>
+<body style="background-color: orange;" text="#8B4513" onLoad="starttime()">
+    <h3 style="color: black; text-align: center;">Часы</h3>
+    <form name="clock">
+        <input type="text" name="next" size="12" value="" readonly>
+    </form>
+</body>
 </html>
