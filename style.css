@@ -1,10 +1,16 @@
 
 body{
     display: grid;
-    
+    text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 14px;
+    background-color: orange;
 }
-table{
+table 
+{
     border: 1px solid black;
+    border-spacing: 0px;
+    background-color: white;
 }
 th
 {
@@ -14,16 +20,12 @@ td
 {
     border: 1px solid black;
 }
-tr
-{
-    border: 1px solid black;
-}
 .f
 {
-    
     text-align: center;
 }
 a
 {
     text-decoration: none;
+    color: black;
 }
