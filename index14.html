@@ -1,13 +1,117 @@
+<!DOCTYPE HTML>
+<HTML>
+<HEAD>
+    <META charset="UTF-8">
+    <TITLE>Календарь</TITLE>
+    <STYLE TYPE="text/css">
+        BODY {
+            background-color: #9999FF;
+            color: #000099;
+        }
+    </STYLE>
+    <SCRIPT language="JavaScript">
+        function setToday() {
+            var now = new Date();
+            var month = now.getMonth();
+            var year = now.getFullYear();
+            document.Control.month.selectedIndex = month;
+            document.Control.year.selectedIndex = year - 2000; // Изменено для корректного индекса
+            formCalendar(month, year);
+        }
 
-<!DOCTYPE html>
-<html lang="ru">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title> Лабораторная работа</title>
-        <link rel="stylesheet" href="style1.css">
-        <script src="file1.js" defer></script>
-    </head>
-    <body>
-    </body>
-</html>
+        function setPrev() {
+            var month = document.Control.month.selectedIndex - 1;
+            document.Control.month.selectedIndex = month;
+            var year = document.Control.year.selectedIndex + 2000; // Изменено для корректного года
+            formCalendar(month, year);
+        }
+
+        function setNext() {
+            var month = document.Control.month.selectedIndex + 1;
+            document.Control.month.selectedIndex = month;
+            var year = document.Control.year.selectedIndex + 2000; // Изменено для корректного года
+            formCalendar(month, year);
+        }
+
+        function selectDate() {
+            var year = document.Control.year.selectedIndex + 2000; // Изменено для корректного года
+            var month = document.Control.month.selectedIndex;
+            formCalendar(month, year);
+        }
+
+        function getDaysInMonth(_month, _year) {
+            var days;
+            var daysInMonth = [31, (isLeapYear(_year) ? 29 : 28), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+            days = daysInMonth[_month];
+            return days;
+        }
+
+        function isLeapYear(Year) {
+            return (Year % 4 === 0 && Year % 100 !== 0) || (Year % 400 === 0);
+        }
+
+        function formCalendar(month, year) {
+            month = parseInt(month);
+            year = parseInt(year);
+            var D = new Date(year, month, 0);
+            var temp = "<TABLE ID='calTab' cellspacing=0 cellpadding=0 border=1 style='font-family: serif;'>";
+            temp += "<TBODY ID='calBody' align='center'>";
+            temp += "<TR><TH colspan='7'>" + year + " " + (month + 1) + "</TH></TR>";
+            temp += "<TR><TH>Вс</TH><TH>Пн</TH><TH>Вт</TH><TH>Ср</TH><TH>Чт</TH><TH>Пт</TH><TH>Сб</TH></TR>";
+            var n = D.getDay();
+            for (var i = 0; i < n; i++) {
+                temp += "<TD>&nbsp</TD>";
+            }
+            var num = getDaysInMonth(month, year);
+            for (i = 1; i <= num; i++) {
+                if ((i + n) % 7 === 0) temp += "<TD height=20>" + i + "</TD></TR><TR>";
+                else temp += "<TD>" + i + "</TD>";
+            }
+            D = new Date(year, month, num);
+            num = D.getDay();
+            for (i = num; i < 6; i++) {
+                temp += "<TD>&nbsp</TD>";
+            }
+            temp += "</TR></TBODY></TABLE>";
+            document.getElementById("calTab").outerHTML = temp;
+        }
+    </SCRIPT>
+</HEAD>
+<BODY onLoad="setToday()">
+    <H2>Календарь</H2>
+    <FORM name="Control">
+        <SELECT name="month" onChange="selectDate()">
+            <OPTION>Январь</OPTION>
+            <OPTION>Февраль</OPTION>
+            <OPTION>Март</OPTION>
+            <OPTION>Апрель</OPTION>
+            <OPTION>Май</OPTION>
+            <OPTION>Июнь</OPTION>
+            <OPTION>Июль</OPTION>
+            <OPTION>Август</OPTION>
+            <OPTION>Сентябрь</OPTION>
+            <OPTION>Октябрь</OPTION>
+            <OPTION>Ноябрь</OPTION>
+            <OPTION>Декабрь</OPTION>
+        </SELECT>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <SELECT name="year" onChange="selectDate()">
+            <SCRIPT language="JavaScript">
+                for (var i = 2000; i <= 2500; i++) {
+                    document.write("<OPTION>" + i + "</OPTION>");
+                }
+            </SCRIPT>
+        </SELECT>
+    </FORM>
+    <FORM name="Calend">
+        <TABLE ID="calTab" cellspacing=0 cellpadding=0 styly="border=1" style="font-family: serif;">
+            <TBODY ID="calBody"></TBODY>
+        </TABLE>
+    </FORM>
+    <FORM name="Buttons">
+        <INPUT type="button" name="prev" value="назад" onClick="setPrev()">
+        <INPUT type="button" name="today" value="Сегодня" onClick="setToday()">
+        <INPUT type="button" name="next" value="дальше" onClick="setNext()">
+    </FORM>
+</BODY>
+</HTML>
