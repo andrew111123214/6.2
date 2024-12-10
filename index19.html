@@ -1,12 +1,51 @@
 <!DOCTYPE html>
 <html lang="ru">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title> Лабораторная работа</title>
-        <link rel="stylesheet" href="style1.css">
-        <script src="file1.js" defer></script>
-    </head>
-    <body>
-    </body>
+<head>
+    <meta charset="UTF-8">
+    <script language="JavaScript">
+        function enter_check() {
+            var a; 
+            do { 
+                a = prompt("Введите число от 0 до 50", "?"); 
+            } while (a < 0 || a > 50); 
+            return a;
+        }
+
+        function boom(n) {
+            for (j = n; j > 0; j--) {
+                for (i = 10; i > 0; i--) {
+                    window.top.moveBy(0, i);
+                    window.top.moveBy(i, 0);
+                    window.top.moveBy(0, -i);
+                    window.top.moveBy(-i, 0);
+                }
+            }
+        }
+        function NewGame() {
+            var x, y, i, attempts = 0; 
+            y = Math.round(Math.random() * 50); 
+            x = enter_check();
+            attempts++; 
+
+            while (x != y) {
+                if (x < y) alert("Ваше число меньше загаданного");
+                if (x > y) alert("Ваше число больше загаданного");
+                x = enter_check();
+                attempts++;
+            }
+
+            alert("Поздравляю! Вы угадали число за " + attempts + " попыток."); // Вывод количества попыток
+            if (confirm("Хотите сыграть еще раз?")) NewGame(); 
+            else { alert("Спасибо за игру!"); boom(3); }
+        }
+    </script> 
+    <title>Угадай-ка!</title>
+</head>
+
+<body>
+    <h2>Угадай число!</h2>
+    <h3>Попробуйте угадать, что это за число, и удачи...</h3>
+    <input type="button" value="Начать игру" name="NewGame" onclick="NewGame()">
+    <h4>Помните! Загаданное число от 0 до 50.</h4>
+</body>
 </html>
