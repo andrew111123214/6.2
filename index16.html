@@ -1,13 +1,54 @@
-
 <!DOCTYPE html>
 <html lang="ru">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title> Лабораторная работа</title>
-        <link rel="stylesheet" href="style1.css">
-        <script src="file1.js" defer></script>
-    </head>
-    <body>
-    </body>
+<head>
+    <meta charset="UTF-8">
+    <title>Картинка-указатель</title>
+    <style>
+        img {
+            position: absolute;
+        }
+        body {
+            background-color: #9999FF;
+            color: #000099;
+        }
+    </style>
+    <script>
+        var x = 100, y = 100;
+        var ix = 0, iy = 0; 
+        var timID;
+        var speed = 20; 
+
+        function setupAnim() {
+            timID = setInterval(imgMove, 10);
+        }
+
+        function imgMove() {
+            var l = speed;
+            if (x > ix) {
+                ix += Math.min(l, x - ix);
+            } else {
+                ix -= Math.min(l, ix - x);
+            }
+
+            if (y > iy) {
+                iy += Math.min(l, y - iy);
+            } else {
+                iy -= Math.min(l, iy - y);
+            }
+
+            var pImage = document.getElementById('pImage');
+            pImage.style.left = (ix - pImage.width / 2) + 'px'; 
+            pImage.style.top = (iy - pImage.height / 2) + 'px';
+        }
+
+        function Move(event) {
+            x = event.clientX; 
+            y = event.clientY;
+        }
+    </script>
+</head>
+
+<body onload="setupAnim()" onmousemove="Move(event)">
+    <img src="картинка.jpg" id="pImage" style="left:0; top:0; width:36px;" alt="Указатель">
+</body>
 </html>

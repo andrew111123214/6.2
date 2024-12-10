@@ -1,13 +1,42 @@
-
 <!DOCTYPE html>
 <html lang="ru">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title> Лабораторная работа</title>
-        <link rel="stylesheet" href="style1.css">
-        <script src="file1.js" defer></script>
-    </head>
-    <body>
-    </body>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Example</title>
+    <script>
+        var pos = 1;
+        var text = "Привет, я бегущая строка";
+        var text1 = "Привет, я бегущая строка";
+        function scrol1() {
+            document.running.text.value = text.substring(0, pos);
+            if (pos >= text.length) {
+                pos = 1;
+                setTimeout(scrol2, 300);
+            } else {
+                pos++;
+                setTimeout(scrol1, 50);
+            }
+        }
+
+        function scrol2() {
+            document.running.text.value = text.substring(pos, text.length);
+            if (pos >= text.length) {
+                pos = 1;
+                setTimeout(scrol1, 100);
+            } else {
+                pos++;
+                setTimeout(scrol2, 50);
+            }
+        }
+    </script>
+</head>
+
+<body onload="scrol1()">
+    <form name="running">
+            <input type="text" name="text" size="40"><br>
+            <input type="text" name="text" size="40">
+    </form>
+</body>
+
 </html>
